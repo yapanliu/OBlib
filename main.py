@@ -3,7 +3,7 @@ import matplotlib as plt
 import csv
 import pandas as pd
 
-from OBlib.OB import occupancy
+from OBlib.OB import Occupancy
 from OBlib.load_data import load_data
 from OBlib.evaluation import AbsoluteMetrices
 from OBlib.OB import windows
@@ -17,7 +17,7 @@ file_name = 'Indoor_Measurement_Study24.csv'
 file_target = 'Occupancy_Measurement_Study24.csv'
 
 load_data = load_data()
-occupancy = occupancy.occupancy()
+occupancy = Occupancy.occupancy()
 
 
     
