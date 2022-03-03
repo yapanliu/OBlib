@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-class Occupancy:
+class AshraeProfile:
     def ashrae(self, x, sun_thursday, friday, saturday):
         ashrae_profile = pd.DataFrame({
             'Monday': sun_thursday,
