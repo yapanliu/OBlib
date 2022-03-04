@@ -51,6 +51,7 @@ class AbsoluteMetrices:
     '''
 
 
+
     def occupancy(self, y_true, y_pred):
         '''
         
@@ -70,9 +71,10 @@ class AbsoluteMetrices:
 
     def windows(self, y_true, y_pred):
         # categorical, binary --> open/closed
-        acc = Metrices.acc()
-        conf_mat = Metrices.conf_mat()
-        f_1 = Metrices.f_1()
+        # toDo: use metrics from the class Metrics
+        acc = sklearn.metrics.accuracy_score(y_true, y_pred)
+        conf_mat = sklearn.metrics.confusion_matrix(y_true, y_pred)
+        f_1 = sklearn.metrics.f1_score(y_true, y_pred)
         return acc, conf_mat, f_1
 
     def appliances(self, y_true, y_pred):

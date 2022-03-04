@@ -3,10 +3,54 @@ from __future__ import division
 from __future__ import print_function
 import numpy as np
 import scipy.io as sio
+import tensorflow as tf
+import logging
 
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+
+
+class Template():
+    '''
+    put some model description here
+    '''
+
+    class hyperparameters:
+        '''
+        optimal hyperparameters as presented in the paper
+        '''
+
+
+    def preprocess_data():
+        '''
+        use this function to do all preprocessing related to the used method
+        '''
+        data = 0
+        return data
+
+    def train(self, X, y):
+        '''
+        train the model
+        '''
+        return model
+
+    def domain_adaptation():
+        '''
+        run domain adaptation for
+        '''
+        data = 0
+        return data
+
+    def test(self, model, X):
+        '''
+        test the model
+        '''
+        # model = self.train(X, y)
+        preds = model.predict(X)
+        return preds
+
+
 
 
 class LogisticRegression_Haldi():
@@ -22,7 +66,7 @@ class LogisticRegression_Haldi():
         beta2 = 0.14477
         intercept = 1.459
 
-    def predict(self,X):
+    def test(self,X):
         '''
         infer the window states using logistic regression as presented in the
         original paper
@@ -43,88 +87,105 @@ class LogisticRegression_default():
     window opening model proposed by Haldi and Robinson (2009)
     https://www.sciencedirect.com/science/article/pii/S0360132309000961?casa_token=ndqu2NshapsAAAAA:HV-Gcjpdb_wnOvYT8XJjrhetbS2q15phzCrzF41us0iPdQzpnoMiUcBUuoBN1WzwmNhbKPnuets
     '''
-    class parameters:
+    def train(self, X, y):
         '''
-        parameters as fitted using the original model
+        train the model
         '''
-        beta1 =  -0.1814
-        beta2 = 0.14477
-        intercept = 1.459
+        model = LogisticRegression()
+        model.fit(X, y)
+        return model
 
-    def predict(self,X, y):
+
+    def test(self,model, X):
         '''
         infer the window states using logistic regression as presented in the
         original paper
         X: indoor air temperature, outdoor air temperature
-        '''
-        model = LogisticRegression()
-        model.fit(X.iloc[100000:110000, :], y.iloc[100000:110000])
+
+        model = self.train(X, y)
         parameters = self.parameters()
 
         model.classes_ = np.array([0, 1])
         print('coefficients: ', model.coef_[0][0])
         print('bias: ', model.intercept_)
+        '''
+
+
+
         preds = model.predict(X)
         return preds
 
 
 class RandomForest_E3D():
     '''
-    random forest for window states classification
+    toDo: add model description
     '''
+
     class hyperparameters:
         '''
         optimal hyperparameters as presented in the paper
         '''
+        trees = 100
+        depth = 2
+
+    class FeatureNames:
+        '''
+        this is examplarly done for the case of ashrae OB database study #26
+        remarks:
+        'BLINDSState_rightNow' is removed, since only 30 points are recorded
+        '''
+        feature_strings = ['Indoor_Temp [C]', 'Outdoor_Temp [C]',
+                           'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber','Windor_Status']
+        target_string = ['Windor_Status']
 
 
     def train(self, X, y):
         '''
-
         '''
-        model = RandomForestClassifier(max_depth=2, n_estimators = 100)
+        hyperparameters = self.hyperparameters()
+        model = RandomForestClassifier(max_depth= hyperparameters.trees, n_estimators = hyperparameters.depth)
         model.fit(X, y)
-        preds = model.predict(X)
         return model
 
-    def predict (self, model, X):
+    def test (self, model, X):
         '''
-        
         '''
-        #model = self.train(X, y)
         preds = model.predict(X)
         return preds
 
+
+
+
 class DeepLearn():
     logging.getLogger('tensorflow').disabled = True
+    '''
+    put some model description here
+    '''
 
-    # path where repository is saved
-    path_global = 'path-to-cloned-repo/window_opening'
-    # path where adaptation features are saved
-    path_adaptation_features = 'path-to-my-adaptation-features/my-adaptation-features.mat'
-    path_adaptation_labels = 'path-to-my-adaptation-features/my-adaptation-labels.mat'
-    path_test_features = 'path-to-my-adaptation-features/my-test-features.mat'
-    path_test_labels = 'path-to-my-adaptation-features/my-test-features.mat'
-
-    class session_parameters:
+    class hyperparameters:
         '''
-        parameters for executing the adaptation tensorflow session
-        if parameters not defined, default values from this class will be used
+        optimal hyperparameters as presented in the paper
         '''
-        # define devices used for adaptation
-        device = '/cpu:0'
-        # number of training iterations (in thousands)
-        nr_iter = 8
-
-    class hyperparamters_aachen:
         # number of hidden neurons
         hidden_neurons = [64, 94, 81, 10, 25]
         # learning rate
         lr = 0.1
         # regularization
         reg = 1 / 10 ** (4)
+        # define devices used for adaptation
+        device = '/cpu:0'
+        # number of training iterations (in thousands)
+        nr_iter = 8
 
-    def load_trained_model(path):
+
+    def preprocess_data():
+        '''
+        use this function to do all preprocessing related to the used method
+        '''
+        data = 0
+        return data
+
+    def load_trained_model(self, path):
         '''
         function used to load the pretrained model. the loaded model will percieve the hyperparameters as defined by the
         original model training. In case of further development or fine tunings, the updated hyperparameters could be defined
@@ -133,7 +194,7 @@ class DeepLearn():
         :return: classifier: trained model that can be used for further evaluation or as a baseline model for further development
         '''
         # use default hyperparameters
-        hyperparmeters = hyperparamters_aachen
+        hyperparmeters = self.hyperparameters()
         # data type and dimension of input features
         feature_columns = [tf.contrib.layers.real_valued_column("", dimension=25, dtype=tf.float32)]
         # load pretrained model
@@ -145,7 +206,10 @@ class DeepLearn():
                                                      l1_regularization_strength=hyperparmeters.reg), model_dir=path)
         return classifier
 
-    def weight_adaptation(model, training_set, training_target):
+    def domain_adaptation(self, model, X_, y_):
+        '''
+        run domain adaptation for
+        '''
         '''
         :param model: loaded and defined model
         :param training_set: training set used for weight adapation
@@ -154,58 +218,32 @@ class DeepLearn():
         :param nr_iter: number of adaptation iterations divided by 1000
         :return: model with adapted weights
         '''
-        set_parameters = session_parameters
-        with tf.device(set_parameters.device):
+        hyperparmeters = self.hyperparameters()
+        with tf.device(hyperparmeters.device):
             for i in range(1, set_parameters.nr_iter + 1):
-                model.fit(x=training_set, y=training_target, steps=1000, batch_size=4096)
-                predictions = list(model.predict(training_set, as_iterable=True))
+                model.fit(x=X_, y=y_, steps=1000, batch_size=4096)
+                predictions = list(model.predict(X_, as_iterable=True))
         return model
 
-    def make_predictions(path_global):
+    def test(self, X, model = None):
+        '''
+        test the model
+        '''
+        # model = self.train(X, y)
         '''
         run evaluation session and save the rpedicted window states
         :param path_global: global path
         :return:
         '''
         # load input data
-        path_model = path_global + '/trained_model'
-        path_features = path_global + '/inputs/features.mat'
-        path_target = path_global + '/inputs/labels.mat'
-        (x, y) = inputs.get_input_data(path_features, path_target)
+        path_model ='./DL_model'
         # start a new tensorflow session
         # with tf.Session() as sess:
         # load trained model
-        model = load_trained_model(path_model)
+        if model == None:
+            model = self.load_trained_model(path_model)
         # make predicitons
-        predictions = list(model.predict(x, as_iterable=True))
-        # save predicitons to a comma separeted txt file
-        np.savetxt(path_global + '/output/predictions.txt', predictions, fmt="%f")
+        predictions = list(model.predict(X, as_iterable=True))
 
-    def run_adaptation(path_global, path_adaptation_features, path_adaptation_labels):
-        '''
-        load the input features and trained model. make predictions of the window states based on the input data
-        and save them to a comma separated txt file
-        :return:
-        '''
-        # load adaptation data set
-        path_model = path_global + 'OB/DL_model'
-        (x_adapt, y_adapt) = inputs.get_input_data(path_adaptation_features, path_adaptation_labels)
-        # start a new tensorflow session
-        with tf.Session() as sess:
-            # load trained model
-            model = load_trained_model(path_model)
-            # do weight adaptation
-            model = weight_adaptation(model, x_adapt, y_adapt)
-            # make predicitons
-            predictions = list(model.predict(x_adapt, as_iterable=True))
-            # test the performace after adaptation
-            # load data
-            (x_test, y_test) = inputs.get_input_data(path_test_features, path_test_labels)
-            # make predicitons
-            predictions_test = list(model.predict(x_test, as_iterable=True))
-        # save predicitons to a comma separeted txt file
-        np.savetxt(path_global + '/output/predictions.txt', predictions_test, fmt="%f")
-        np.savetxt(path_global + '/output/labels.txt', y_test, fmt="%f")
-
-
+        return predictions
 
