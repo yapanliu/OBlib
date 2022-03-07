@@ -5,29 +5,34 @@ import numpy as np
 import scipy.io as sio
 import tensorflow as tf
 import logging
+import pandas as pd
 
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 
 
-class Template():
+class ModelTemplate():
     '''
-    put some model description here
+    model description
     '''
 
     class hyperparameters:
         '''
-        optimal hyperparameters as presented in the paper
+        hyperparameters from the original paper
+        '''
+
+    class FeatureNames:
+        '''
+        which features are required for the current model?
         '''
 
 
-    def preprocess_data():
+    def preprocess_data(self, ):
         '''
-        use this function to do all preprocessing related to the used method
+        da
         '''
-        data = 0
-        return data
+        return
 
     def train(self, X, y):
         '''
@@ -35,20 +40,25 @@ class Template():
         '''
         return model
 
-    def domain_adaptation():
+    def load_trained_model(self, path):
         '''
-        run domain adaptation for
+        train the model
         '''
-        data = 0
-        return data
+        return model
+
+    def domain_adaptation(model, X):
+        '''
+        run domain adaptation for pretrained model
+        '''
+        return model
 
     def test(self, model, X):
         '''
         test the model
         '''
         # model = self.train(X, y)
-        preds = model.predict(X)
-        return preds
+        predictions = model.predict(X)
+        return predictions
 
 
 
@@ -128,13 +138,47 @@ class RandomForest_E3D():
         trees = 100
         depth = 2
 
+    def preprocess_data(self, x):
+        '''
+        use this function to do all preprocessing related to the used method
+        '''
+        dates = ['01-Jul', '02-Jul', '03-Jul', '04-Jul', '05-Jul', '06-Jul', '07-Jul',
+                 '01-Jan', '02-Jan', '03-Jan', '04-Jan', '05-Jan', '06-Jan', '07-Jan',
+                 '01-Apr', '02-Apr', '03-Apr', '04-Apr', '05-Apr', '06-Apr', '07-Apr',
+                 '01-Oct', '02-Oct', '03-Oct', '04-Oct', '05-Oct', '06-Oct', '07-Oct']
+        data_all = []
+        for current_date in dates:
+            data = x[x['Date_Time'].str.contains(current_date)]
+            # print(data)
+            # input('test')
+            data_all.append(data)
+        df = pd.concat(data_all)
+
+        data_all_test = []
+        for current_date in dates:
+            data = x[x['Date_Time'].str.contains(current_date) == False]
+            # print(data)
+            # input('test')
+            data_all_test.append(data)
+        df_test = pd.concat(data_all_test)
+
+        x_train = df[
+            ['Indoor_Temp [C]', 'Outdoor_Temp [C]', 'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber']]
+        y_true = df[['Windor_Status']]
+
+        x_test = df_test[
+            ['Indoor_Temp [C]', 'Outdoor_Temp [C]', 'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber']]
+        y_test = df_test[['Windor_Status']]
+
+        return x_train, y_true, x_test, y_test
+
     class FeatureNames:
         '''
         this is examplarly done for the case of ashrae OB database study #26
         remarks:
         'BLINDSState_rightNow' is removed, since only 30 points are recorded
         '''
-        feature_strings = ['Indoor_Temp [C]', 'Outdoor_Temp [C]',
+        feature_strings = ['Date_Time', 'Indoor_Temp [C]', 'Outdoor_Temp [C]',
                            'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber','Windor_Status']
         target_string = ['Windor_Status']
 
@@ -178,12 +222,6 @@ class DeepLearn():
         nr_iter = 8
 
 
-    def preprocess_data():
-        '''
-        use this function to do all preprocessing related to the used method
-        '''
-        data = 0
-        return data
 
     def load_trained_model(self, path):
         '''

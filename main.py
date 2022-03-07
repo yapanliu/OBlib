@@ -41,14 +41,7 @@ def test_model(path, file_name,file_target, feature_strings, target_string):
 
     x = load_data.create_x(data, feature_strings)  # get variable that contains features
     #y = load_data.create_x(target, target_string)  # get variable that contains ground truth
-
-    y = x[['Windor_Status']]
-    x = x[['Indoor_Temp [C]', 'Outdoor_Temp [C]', 'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber']]
-
-    x_train = x.iloc[104000:108000, :]
-    y_true = y.iloc[104000:108000]
-    x_test = x.iloc[108000:, :]
-    y_test = y.iloc[108000:]
+    x_train, y_true, x_test, y_test = rf.preprocess_data(x)
 
     #there is still an issue with the frankfurt data set- not the same number of data points
     #model = haldi_lr.train(x_train[['Indoor_Temp [C]', 'Outdoor_Temp [C]']], y_true)
