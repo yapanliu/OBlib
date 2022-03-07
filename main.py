@@ -26,6 +26,7 @@ haldi_lr = Windows.LogisticRegression_Haldi()
 
 # window opening model using random forest
 rf = Windows.RandomForest_E3D()
+rf = Windows.SVMs_E3D()
 feature_strings = rf.FeatureNames.feature_strings
 target_string = rf.FeatureNames.target_string
 
