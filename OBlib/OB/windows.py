@@ -147,21 +147,22 @@ class RandomForest_E3D():
                  '01-Jan', '02-Jan', '03-Jan', '04-Jan', '05-Jan', '06-Jan', '07-Jan',
                  '01-Apr', '02-Apr', '03-Apr', '04-Apr', '05-Apr', '06-Apr', '07-Apr',
                  '01-Oct', '02-Oct', '03-Oct', '04-Oct', '05-Oct', '06-Oct', '07-Oct']
-        data_all = []
-        for current_date in dates:
-            data = x[x['Date_Time'].str.contains(current_date)]
-            # print(data)
-            # input('test')
-            data_all.append(data)
-        df = pd.concat(data_all)
 
-        data_all_test = []
+
+
+
+        
         for current_date in dates:
-            data = x[x['Date_Time'].str.contains(current_date) == False]
-            # print(data)
-            # input('test')
-            data_all_test.append(data)
-        df_test = pd.concat(data_all_test)
+            if current_date == '01-Jul':
+                df = x[x['Date_Time'].str.contains(current_date)]
+                df_test = x[x['Date_Time'].str.contains(current_date)==False]
+
+            else:
+                df_ = x[x['Date_Time'].str.contains(current_date)]
+                df_test = df_test[df_test['Date_Time'].str.contains(current_date) == False]
+
+                df = pd.concat([df, df_])
+
 
         x_train = df[
             ['Indoor_Temp [C]', 'Outdoor_Temp [C]', 'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber']]
@@ -220,21 +221,17 @@ class SVMs_E3D():
                  '01-Jan', '02-Jan', '03-Jan', '04-Jan', '05-Jan', '06-Jan', '07-Jan',
                  '01-Apr', '02-Apr', '03-Apr', '04-Apr', '05-Apr', '06-Apr', '07-Apr',
                  '01-Oct', '02-Oct', '03-Oct', '04-Oct', '05-Oct', '06-Oct', '07-Oct']
-        data_all = []
-        for current_date in dates:
-            data = x[x['Date_Time'].str.contains(current_date)]
-            # print(data)
-            # input('test')
-            data_all.append(data)
-        df = pd.concat(data_all)
 
-        data_all_test = []
         for current_date in dates:
-            data = x[x['Date_Time'].str.contains(current_date) == False]
-            # print(data)
-            # input('test')
-            data_all_test.append(data)
-        df_test = pd.concat(data_all_test)
+            if current_date == '01-Jul':
+                df = x[x['Date_Time'].str.contains(current_date)]
+                df_test = x[x['Date_Time'].str.contains(current_date) == False]
+
+            else:
+                df_ = x[x['Date_Time'].str.contains(current_date)]
+                df_test = df_test[df_test['Date_Time'].str.contains(current_date) == False]
+
+                df = pd.concat([df, df_])
 
         x_train = df[
             ['Indoor_Temp [C]', 'Outdoor_Temp [C]', 'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber']]
