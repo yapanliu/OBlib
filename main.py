@@ -5,14 +5,10 @@ import pandas as pd
 
 from OB.Windows import RandomForest_Aachen
 
-from OBlib.OB import Occupancy
+from OB import Occupancy
 from OBlib.load_data import load_data
 from OBlib.evaluation import AbsoluteMetrices
 from OBlib.evaluation import Metrices
-from OBlib.OB import Windows
-
-from sklearn.linear_model import LogisticRegression
-
 
 # path and file names
 path = 'c:/git/data/'
@@ -20,11 +16,6 @@ file_name = 'Study_26_Study26.csv'
 file_target = 'Study_26_Study26.csv'
 
 load_data = load_data()
-
-# pick up a model
-# examples
-# window opening model using logistic regression
-haldi_lr = Windows.LogisticRegression_Haldi()
 
 # window opening model using random forest
 rf_model = RandomForest_Aachen.Model()

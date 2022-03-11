@@ -148,10 +148,6 @@ class RandomForest_E3D():
                  '01-Apr', '02-Apr', '03-Apr', '04-Apr', '05-Apr', '06-Apr', '07-Apr',
                  '01-Oct', '02-Oct', '03-Oct', '04-Oct', '05-Oct', '06-Oct', '07-Oct']
 
-
-
-
-        
         for current_date in dates:
             if current_date == '01-Jul':
                 df = x[x['Date_Time'].str.contains(current_date)]
