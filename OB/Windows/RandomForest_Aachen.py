@@ -12,10 +12,24 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 
-class PrepareData():
+class Study26():
     '''
+    This class contains functions for preprocessing data from the study 26 from
+    ashrae ob database for the random forest model
 
     '''
+
+    class FeatureNames:
+        '''
+        naming of the required features for the random forest model in the
+        study 26 from the ashrae ob database
+        
+        remarks:
+        'BLINDSState_rightNow' is removed, since only 30 points are recorded
+        '''
+        feature_strings = ['Date_Time', 'Indoor_Temp [C]', 'Outdoor_Temp [C]',
+                           'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber']
+        target_string = ['Windor_Status']
 
     def preprocess_data(self, x):
         '''
@@ -34,7 +48,6 @@ class PrepareData():
             else:
                 df_ = x[x['Date_Time'].str.contains(current_date)]
                 df_test = df_test[df_test['Date_Time'].str.contains(current_date) == False]
-
                 df = pd.concat([df, df_])
 
         x_train = df[
@@ -47,15 +60,7 @@ class PrepareData():
 
         return x_train, y_true, x_test, y_test
 
-    class FeatureNames:
-        '''
-        this is examplarly done for the case of ashrae OB database study #26
-        remarks:
-        'BLINDSState_rightNow' is removed, since only 30 points are recorded
-        '''
-        feature_strings = ['Date_Time', 'Indoor_Temp [C]', 'Outdoor_Temp [C]',
-                           'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber', 'Windor_Status']
-        target_string = ['Windor_Status']
+
 
 
 class Model():
@@ -73,6 +78,7 @@ class Model():
 
     def train(self, X, y):
         '''
+        train a random forest classifier with the hyperparameters as defined in the original paper
         '''
         hyperparameters = self.hyperparameters()
         model = RandomForestClassifier(max_depth= hyperparameters.trees, n_estimators = hyperparameters.depth)
@@ -81,6 +87,10 @@ class Model():
 
     def test (self, model, X):
         '''
+        run inference on a trained model to obtain window states predictions
+        inputs:
+        model: trained classifier
+        X: variable with features from the test set
         '''
         preds = model.predict(X)
         return preds
