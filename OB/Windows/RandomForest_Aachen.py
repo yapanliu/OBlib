@@ -29,7 +29,7 @@ class Study26():
         '''
         feature_strings = ['Date_Time', 'Indoor_Temp [C]', 'Outdoor_Temp [C]',
                            'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber']
-        target_string = ['Windor_Status']
+        target_string = ['WINDOWState_rightNow']
 
     def preprocess_data(self, x):
         '''
@@ -52,11 +52,19 @@ class Study26():
 
         x_train = df[
             ['Indoor_Temp [C]', 'Outdoor_Temp [C]', 'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber']]
-        y_true = df[['Windor_Status']]
+        df['WINDOWState_rightNow'] = df['WINDOWState_rightNow'].map({0.5: 1, 0:0})
+        y_true = df[['WINDOWState_rightNow']]
+        y = df['WINDOWState_rightNow'].unique()
+        print(sorted(y))
+        input('unique')
 
         x_test = df_test[
             ['Indoor_Temp [C]', 'Outdoor_Temp [C]', 'Outdoor_Air_Speed [m/s]', 'OUTDoor_RH [%]', 'OccupantNumber']]
-        y_test = df_test[['Windor_Status']]
+        df_test['WINDOWState_rightNow'] = df_test['WINDOWState_rightNow'].map({0.5: 1, 0: 0})
+        y_test = df_test[['WINDOWState_rightNow']]
+        y = df_test['WINDOWState_rightNow'].unique()
+        print(sorted(y))
+        input('unique')
 
         return x_train, y_true, x_test, y_test
 
