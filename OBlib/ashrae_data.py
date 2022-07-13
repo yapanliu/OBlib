@@ -61,6 +61,11 @@ def load_ashrae_data():
     # breakpoint()
     # create a connector of OBPlatform
     connector = Connector()
+    
+    # Print progress information
+    # Comment out the following line to hide progress information
+    logger.setLevel(logging.INFO)
+
     # Download Plug Load + Occupant Presence behaviors from study 22, 11, and 2.
     connector.download_export(
         "data.zip",
