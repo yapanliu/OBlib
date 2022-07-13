@@ -12,6 +12,8 @@ print(df_main_table.columns)
 with open("./OBlib/tmp.txt", "wb") as fp:
     pickle.dump(df_main_table, fp)
 
+print(df_main_table['Behavior_Type'].unique())
+
 # load picked data from the pickle file
 with open("./OBlib/tmp.txt", "rb") as fp:
     df_main_table = pickle.load(fp)
@@ -24,7 +26,7 @@ print("##############################################################")
 
 
 connector = Connector()
-breakpoint()
+# breakpoint()
 # List all behaviors available in the database
 # print(connector.list_behaviors())
 [print(x) for x in connector.list_behaviors()]
@@ -36,21 +38,21 @@ logger.setLevel(logging.INFO)
 # Download Plug Load + Occupant Presence behaviors from study 22, 11, and 2.
 connector.download_export(
     "data.zip",
-    ["Plug_Load", "Occupancy_Measurement"],
-    ["22", "11", "2"],
+    ["Lighting_Status"],
+    ["9"],
     show_progress_bar=True,  # False to disable progrees bar
 )
 
 # behavior_type = "Plug_Load"
-behavior_type = "Occupancy_Measurement"
-study_id = "22"
+behavior_type = "Lighting_Status"
+study_id = "9"
 
 zf = zipfile.ZipFile("data.zip")
 df = pd.read_csv(zf.open(f"{behavior_type}_Study{study_id}.csv"))
 print(df.head())
 
 # List all behaviors available in study 1, 2, 3, and 4
-json_study_behaviors = connector.list_behaviors_in_studies(studies=["1", "22"])
+json_study_behaviors = connector.list_behaviors_in_studies(studies=["9", "22"])
 print(json_study_behaviors)
 
 # List all studies available in the database, filtered by behavior types,

@@ -58,16 +58,22 @@ def load_ashrae_data():
             continue
         else:
             break
+    # breakpoint()
     # create a connector of OBPlatform
     connector = Connector()
     # Download Plug Load + Occupant Presence behaviors from study 22, 11, and 2.
     connector.download_export(
         "data.zip",
-        [behavior_select],
-        [id],
+        [f"{behavior_select}"],
+        [f"{id}"],
         show_progress_bar=True,  # False to disable progrees bar
     )
-    # breakpoint()
+    
+    # deal with name difference in the downloaded data
+    if behavior_num == 1:
+        behavior_select += "_Measurement"
+    else:
+        pass 
     zf = zipfile.ZipFile("data.zip")
     df = pd.read_csv(zf.open(f"{behavior_select}_Study{id}.csv"))
     print("##############################################################")
