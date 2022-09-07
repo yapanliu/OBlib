@@ -129,7 +129,7 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
         csv_metrics,
         f"evaluation-{st_ob_type}-{chosen_model}.csv",
         "text/csv",
-        key='download-csv'
+        key='download-evaluation-csv'
     )
     csv_pred = convert_df(predictions)
 
@@ -138,7 +138,7 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
         csv_pred,
         f"predictions-{st_ob_type}-{chosen_model}.csv",
         "text/csv",
-        key='download-csv'
+        key='download-predictions-csv'
     )
     st.markdown("""---""")
 # select the model to be processed 
