@@ -3,6 +3,7 @@ pandas
 plotly==5.9
 streamlit==1.10
 scikit-learn==1.1.1
+kaleido
 
 # for models:
 # tensorflow==2.4

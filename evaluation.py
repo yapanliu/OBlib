@@ -53,7 +53,7 @@ class AbsoluteMetrices:
         self.y_pred = y_pred
         self.Metrices = Metrices(self.y_true, self.y_pred)
 
-    def Occupancy(self):
+    def Occupancy_Status(self):
         '''
 
         '''
@@ -64,7 +64,7 @@ class AbsoluteMetrices:
         eval = pd.DataFrame({'Evaluation': [acc, conf_mat, f_1]}, index=['Accuracy', 'Confusion Matrix', 'F1-Score'])
         return eval
 
-    def Occupant_count(self):
+    def Occupant_Number(self):
         # continuous --> 0...n
         mae = self.Metrices.mae()
         mse = self.Metrices.mse()
@@ -72,7 +72,7 @@ class AbsoluteMetrices:
         eval = pd.DataFrame({'Evaluation': [mae, mse, rmse]}, index=['MAE', 'MSE', 'RMSE'])
         return eval
 
-    def Windows(self):
+    def Window_Status(self):
         # categorical, binary --> open/closed
         # toDo: use metrics from the class Metrics
         acc = sklearn.metrics.accuracy_score(self.y_true, self.y_pred)
@@ -81,7 +81,7 @@ class AbsoluteMetrices:
         eval = pd.DataFrame({'Evaluation': [acc, conf_mat, f_1]}, index=['Accuracy', 'Confusion Matrix', 'F1-Score'])
         return eval
 
-    def Appliances(self):
+    def Appliance_Use(self):
         # categorical, binary --> in use/not in use
         acc = self.Metrices.acc()
         balanced_acc = self.Metrices.balanced_acc()
@@ -90,7 +90,7 @@ class AbsoluteMetrices:
         eval = pd.DataFrame({'Evaluation': [acc, balanced_acc, conf_mat, f_1]}, index=['Accuracy', 'Balanced Accuracy', 'Confusion Matrix', 'F1-Score'])
         return eval
 
-    def Shadings(self):
+    def Shading_Status(self):
         # categorical --> down, up, partially
         acc = self.Metrices.acc()
         conf_mat = self.Metrices.conf_mat()
@@ -98,7 +98,7 @@ class AbsoluteMetrices:
         eval = pd.DataFrame({'Evaluation': [acc, conf_mat, f_beta]}, index=['Accuracy', 'Confusion Matrix', 'F-beta Score'])
         return eval
 
-    def Lighting(self):
+    def Lighting_Status(self):
         # categorical, binary --> on/off
         acc = self.Metrices.acc()
         conf_mat = self.Metrices.conf_mat()
@@ -106,7 +106,7 @@ class AbsoluteMetrices:
         eval = pd.DataFrame({'Evaluation': [acc, conf_mat, f_1]}, index=['Accuracy', 'Confusion Matrix', 'F1-Score'])
         return eval
 
-    def Thermostat(self):
+    def Thermostat_Adjustment(self):
         # continuous --> settings range [n..m]
         mae = self.Metrices.mae()
         mse = self.Metrices.mse()
