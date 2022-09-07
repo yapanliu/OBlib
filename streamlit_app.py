@@ -199,7 +199,7 @@ def testModel(model_type_path, st_ob_type, chosen_model):
         csv_metrics,
         f"evaluation-{st_ob_type}-{chosen_model}.csv",
         "text/csv",
-        key='download-csv'
+        key='download-evaluation-csv'
     )
     csv_pred = convert_df(plot_df)
 
@@ -208,7 +208,7 @@ def testModel(model_type_path, st_ob_type, chosen_model):
         csv_pred,
         f"predictions-{st_ob_type}-{chosen_model}.csv",
         "text/csv",
-        key='download-csv'
+        key='download-predictions-csv'
     )
     
     # save test results
