@@ -26,9 +26,12 @@ from utils import datasetInfo, modelContributor
 # add sidebar
 def sideBar():
     #Add sidebar to the app
-    st.sidebar.markdown("## OBlib - Occupant Behavior Library")
+    st.sidebar.markdown("## OBLib - Occupant Behavior Library")
     st.sidebar.markdown("Welcome to the OBLib App!")
     st.sidebar.markdown("Dataset used in this app is from an opensource platform: https://ashraeobdatabase.com")
+    st.sidebar.markdown("Our GitHub Public Repository: https://github.com/yapanliu/OBlib")
+    st.sidebar.markdown("[Contact Us](mailto:yliu88@syr.edu)")
+    
 
 # add select box for the behavior type
 def selectBehaviorType(models_path):
