@@ -53,7 +53,7 @@ class AbsoluteMetrices:
         self.y_pred = y_pred
         self.Metrices = Metrices(self.y_true, self.y_pred)
 
-    def Occupancy_Status(self):
+    def Occupancy_Measurement(self):
         '''
 
         '''
@@ -81,7 +81,7 @@ class AbsoluteMetrices:
         eval = pd.DataFrame({'Evaluation': [acc, conf_mat, f_1]}, index=['Accuracy', 'Confusion Matrix', 'F1-Score'])
         return eval
 
-    def Appliance_Use(self):
+    def Plug_Load(self):
         # categorical, binary --> in use/not in use
         acc = self.Metrices.acc()
         balanced_acc = self.Metrices.balanced_acc()

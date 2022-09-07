@@ -8,6 +8,8 @@ July 2022
 OBlib streamilit app
 """
 
+# runs under conda oblib environment
+
 import os
 import pickle
 import numpy as np
@@ -19,6 +21,7 @@ import plotly.express as px
 from pathlib import Path
 import importlib
 from evaluation import AbsoluteMetrices
+from utils import datasetInfo, modelContributor
 
 # add sidebar
 def sideBar():
@@ -87,9 +90,14 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
     dataset_name, dataset_path = model_class.dataset()
 
     st.header(f'Model Testing Results for {dataset_name}')
-    st.markdown("**Display dataset information here (pull from master table)*")
+    st.markdown("#### Dataset Information")
+    # get the dataset information
+    df_select = datasetInfo(int(dataset_name.split(' ')[-1]), st_ob_type)
+    st.dataframe(df_select)
+    
     
     # load test results
+    st.markdown("#### Testing Results")
     results_dir = f"./{model_type_path}/test_results/"
     image = Image.open(results_dir + 'fig.png')
 
@@ -109,20 +117,20 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
         with col1:
             conf = eval['Evaluation']['Confusion Matrix']
             eval_ = eval.drop(index='Confusion Matrix')
-            st.markdown("### **Evaluation Results**")
-            st.dataframe(eval_.style.format("{:.2%}"))
+            st.markdown("#### Evaluation Results")
+            st.table(eval_.style.format("{:.2%}"))
         with col2:
-            st.markdown("### **Confusion Matrix**")
-            st.dataframe(conf)
+            st.markdown("#### Confusion Matrix")
+            st.table(conf)
             # st.markdown("*0-Close, 1-Open*")
     else:
         with col1:
-            st.markdown("### **Evaluation Results**")
+            st.markdown("#### Evaluation Results")
             eval = eval.astype(float).round(2)
             st.dataframe(eval.style.format("{:.2%}"))
             
     
-    st.markdown("### **Download Results**")
+    st.markdown("#### Download Results")
     csv_metrics = convert_df(eval)
     st.download_button(
         "Press to download evaluation",
@@ -131,6 +139,7 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
         "text/csv",
         key='download-evaluation-csv'
     )
+    predictions.reset_index(drop=True, inplace=True)
     csv_pred = convert_df(predictions)
 
     st.download_button(
@@ -140,6 +149,14 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
         "text/csv",
         key='download-predictions-csv'
     )
+    
+    # get the model contributor information
+    st.markdown("#### Model Contributor")
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        df_select = modelContributor(model_type_path)
+        st.table(df_select)
+    
     st.markdown("""---""")
 # select the model to be processed 
 def testModel(model_type_path, st_ob_type, chosen_model):
@@ -174,15 +191,15 @@ def testModel(model_type_path, st_ob_type, chosen_model):
         with col1:
             conf = eval['Evaluation']['Confusion Matrix']
             eval_ = eval.drop(index='Confusion Matrix')
-            st.markdown("### **Evaluation Results**")
+            st.markdown("#### Evaluation Results")
             st.dataframe(eval_.style.format("{:.2%}"))
         with col2:
-            st.markdown("### **Confusion Matrix**")
+            st.markdown("#### Confusion Matrix")
             st.dataframe(conf)
             # st.markdown("*0-Close, 1-Open*")
     else:
         with col1:
-            st.markdown("### **Evaluation Results**")
+            st.markdown("#### Evaluation Results")
             st.dataframe(eval.style.format("{:.2%}"))
 
     plot_df = pd.DataFrame(
