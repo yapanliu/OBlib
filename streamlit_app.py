@@ -136,7 +136,7 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
     st.markdown("#### Download Results")
     csv_metrics = convert_df(eval)
     st.download_button(
-        "Press to download evaluation",
+        "Click to download evaluation",
         csv_metrics,
         f"evaluation-{st_ob_type}-{chosen_model}.csv",
         "text/csv",
@@ -146,7 +146,7 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
     csv_pred = convert_df(predictions)
 
     st.download_button(
-        "Press to download predictions",
+        "Click to download predictions",
         csv_pred,
         f"predictions-{st_ob_type}-{chosen_model}.csv",
         "text/csv",
@@ -215,7 +215,7 @@ def testModel(model_type_path, st_ob_type, chosen_model):
 
     csv_metrics = convert_df(eval)
     st.download_button(
-        "Press to download evaluation",
+        "Click to download evaluation",
         csv_metrics,
         f"evaluation-{st_ob_type}-{chosen_model}.csv",
         "text/csv",
@@ -224,7 +224,7 @@ def testModel(model_type_path, st_ob_type, chosen_model):
     csv_pred = convert_df(plot_df)
 
     st.download_button(
-        "Press to download predictions",
+        "Click to download predictions",
         csv_pred,
         f"predictions-{st_ob_type}-{chosen_model}.csv",
         "text/csv",
