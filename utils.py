@@ -26,8 +26,8 @@ def datasetInfo(dataset_id, ob_type):
 def modelContributor(data_path):
     df = pd.read_csv(f'{data_path }'+ '/model_info.txt', sep=':', header=None)
     
-    df.set_index(0, drop=True, inplace=True)
-    df.columns = ['Information']
+    df.columns = ['Category', 'Information']
+    df.set_index('Category', drop=True, inplace=True)
     
     return df
     
@@ -37,8 +37,9 @@ if __name__ == "__main__":
     
     dataset_id = 26
     ob_type = "Window_Status"
-    datasetInfo(id, ob_type)
+    datasetInfo(dataset_id, ob_type)
     
     data_path = './Models/Window_Status/SVM_E3D/'
-    modelContributor(data_path)
+    df_select = modelContributor(data_path)
+    df_select.loc['Dataset', 'Information']
 

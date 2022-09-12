@@ -86,13 +86,10 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
     chosen_model: selected model name
     '''
     
+    df_select = modelContributor(model_type_path)
+    dataset_name = df_select.loc['Dataset', 'Information']
     
-    imported_module = importlib.import_module('.'.join(model_type_path.with_suffix('').parts) + '.model')
-    
-    model_class = imported_module.Model()
-    dataset_name, dataset_path = model_class.dataset()
-
-    st.header(f'Model Testing Results for {dataset_name}')
+    st.header('Model Testing Results')
     st.markdown("#### Dataset Information")
     # get the dataset information
     df_select = datasetInfo(int(dataset_name.split(' ')[-1]), st_ob_type)
@@ -154,12 +151,10 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
     )
     
     # get the model contributor information
-    st.markdown("#### Model Contributor")
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        df_select = modelContributor(model_type_path)
-        st.table(df_select)
-    
+    st.markdown("#### Model Information")
+    df_select = modelContributor(model_type_path)
+    st.table(df_select)
+
     st.markdown("""---""")
 # select the model to be processed 
 def testModel(model_type_path, st_ob_type, chosen_model):

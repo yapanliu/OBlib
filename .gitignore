@@ -1,4 +1,8 @@
+# local testing files
 ./OBlib/All_behavior_studies_copy_20210614.xlsx
 data/
 data.zip
 /Models/all_studies_info_simplified.xlsx
+/Models/Window_Status/ANN_SU/_raw/
+/Models/Occupant_Number/DNN_SU/_raw/
+/Models/Window_Status/SVM_E3D/data/Study_26_Study26.csv

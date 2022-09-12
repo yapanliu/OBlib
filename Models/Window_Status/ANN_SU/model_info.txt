@@ -1,4 +1,4 @@
-Author:Andre Orth
-Affiliation:IAI
+Author:Pratik Pandey 
+Affiliation:Syracuse University
 Dataset:ASHRAE OB Database Study 26
 Related Publication:N/A
