@@ -252,7 +252,7 @@ def main():
     
     # set title of the page
     st.title('OBLib-Occupant Behavior library')
-    st.markdown('(<font style="color:blue"> *Currently only the "Window Status" has valid model. More models coming soon!* </font>)', unsafe_allow_html=True)
+    st.markdown('<font style="color:blue"> *Currently only the  "Occupant Number" and "Window Status" have valid models.<br>More models coming soon!* </font>', unsafe_allow_html=True)
     
     models_path = Path('Models')  # path to the models folder
     
