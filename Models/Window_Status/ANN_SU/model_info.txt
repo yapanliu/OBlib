@@ -1,4 +1,4 @@
 Author:Pratik Pandey 
 Affiliation:Syracuse University
 Dataset:ASHRAE OB Database Study 26
-Related Publication:In Publishing
+Related Publication:"In Publishing"
