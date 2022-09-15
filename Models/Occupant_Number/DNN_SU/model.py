@@ -192,9 +192,14 @@ def evaluationResults():
         df_select = pickle.load(f)
     
     # evaluation metrics
-    metrices = AbsoluteMetrices(df_select['y_true'], df_select['y_pred'])
+    metrices = AbsoluteMetrices(df_select['y_true'], df_select['y_pred'], mismatch_n=2)
     eval_fetch = getattr(metrices, 'Occupant_Number')
     eval = eval_fetch() 
+    
+    # # save to pickle file
+    # with open('./Models/Occupant_Number/DNN_SU/test_results/evaluation.pickle', 'wb') as f:
+    #     pickle.dump(eval, f)
+    
     print(eval)
 
 

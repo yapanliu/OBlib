@@ -5,9 +5,10 @@ import sklearn.metrics
 
 
 class Metrices:
-    def __init__(self, y_true, y_pred):
+    def __init__(self, y_true, y_pred, mismatch_n):
         self.y_true = y_true
         self.y_pred = y_pred
+        self.mismatch_n = mismatch_n
 
     def acc(self):
         return sklearn.metrics.accuracy_score(self.y_true, self.y_pred)
@@ -38,6 +39,14 @@ class Metrices:
         with ax=None the average is performed element-wise along the array, returning a scalar value
         '''
         return np.sqrt((np.subtract(self.y_true, self.y_pred) ** 2).mean())
+    
+    def mismatch(self):
+        error = 0
+        for i in range(len(self.y_pred)):
+            if abs(self.y_pred[i] - self.y_true[i]) > self.mismatch_n:
+                error += 1
+        err_rate = error/len(self.y_pred)
+        return err_rate
 
     def n_rmse(self):
         # for normalization rmse can be divided by: mean, max-min, standard deviation, interquartile range q1-q3
@@ -48,10 +57,11 @@ class AbsoluteMetrices:
     '''
     absolute metrices used to evaluate each target OB variable
     '''
-    def __init__(self, y_true, y_pred):
+    def __init__(self, y_true, y_pred, mismatch_n):
         self.y_true = y_true
         self.y_pred = y_pred
-        self.Metrices = Metrices(self.y_true, self.y_pred)
+        self.mismatch_n = mismatch_n
+        self.Metrices = Metrices(self.y_true, self.y_pred, self.mismatch_n)
 
     def Occupancy_Measurement(self):
         '''
@@ -66,10 +76,12 @@ class AbsoluteMetrices:
 
     def Occupant_Number(self):
         # continuous --> 0...n
-        mae = self.Metrices.mae()
-        mse = self.Metrices.mse()
-        rmse = self.Metrices.rmse()
-        eval = pd.DataFrame({'Evaluation': [mae, mse, rmse]}, index=['MAE', 'MSE', 'RMSE'])
+        # mae = self.Metrices.mae()
+        # mse = self.Metrices.mse()
+        # rmse = self.Metrices.rmse()
+        # eval = pd.DataFrame({'Evaluation': [mae, mse, rmse]}, index=['MAE', 'MSE', 'RMSE'])
+        mismatch = self.Metrices.mismatch()
+        eval = pd.DataFrame({'Evaluation': [mismatch]}, index=['Mismatch'])
         return eval
 
     def Window_Status(self):
