@@ -1,0 +1,24 @@
+Behavior_Type,Model_Name,Model_Type,Model_Details,Model_Input,Model_Output,Model_Training,Model_Testing,Contributor,Affiliation,Dataset,Related_Publication
+Occupant_Number,ANN_SU,ANN,"Three layers of neural network
+",History of occupant counts,Number of occupants,"Occupant_Number_Measurement 
+Time of day_sin 
+Time of day_cos
+ Occupancy_pre_24h 
+Occupancy_pas_30min",Four Days,Zixin Jiang ,Syracuse University,ASHRAE OB Database Study 32,In Publishing
+Window_Status,ANN_SU,ANN,"5 layers of neural network
+ReLU activation function
+Adam optimizer","Indoor_RH [%] 
+Indoor_Temp [C]
+Outdoor_Temp [C]
+Outdoor_Wind_Speed [m/s] 
+Outdoor_RH [%] ","0 - window close
+1 - window open",0.8,0.2,Pratik Pandey ,Syracuse University,ASHRAE OB Database Study 26,In Publishing
+Window_Status,SVM_E3D,SVM,SVC model,"Indoor_Temp [C]
+Outdoor_Temp [C] 
+Outdoor_Air_Speed [m/s] 
+OUTDoor_RH [%] 
+OccupantNumber","0 - window close
+1 - window open",The rest of data except those used in model testing,"Oct-01-2021 - Oct-07-2012
+Jan-01-2021 - Jan-07-2012
+Apr-01-2021 - Apr-07-2012
+Jul-01-2021 - Jul-07-2012",Andre Orth,IAI,ASHRAE OB Database Study 26,Markovic R. Wolf S. Cao J. Spinnräker E. Wölki D. Frisch J. & van Treeck C. (2017). Comparison of different classification algorithms for the detection of users interaction with windows in office buildings. Energy Procedia 122 337-342. https://doi.org/10.1016/j.egypro.2017.07.333

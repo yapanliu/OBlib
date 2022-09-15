@@ -1,4 +1,0 @@
-Author:Zixin Jiang 
-Affiliation:Syracuse University
-Dataset:ASHRAE OB Database Study 32
-Related Publication:"In Publishing" 

@@ -1,4 +1,0 @@
-Author:Andre Orth
-Affiliation:IAI
-Dataset:ASHRAE OB Database Study 26
-Related Publication:"Markovic, R., Wolf, S., Cao, J., Spinnräker, E., Wölki, D., Frisch, J., & van Treeck, C. (2017). Comparison of different classification algorithms for the detection of user's interaction with windows in office buildings. Energy Procedia, 122, 337-342. https://doi.org/10.1016/j.egypro.2017.07.333" 

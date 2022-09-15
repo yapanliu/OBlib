@@ -85,15 +85,21 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
     st_ob_type: selected behavior name
     chosen_model: selected model name
     '''
+    # get the model contributor information and model details
+    df_model, df_contributor = modelContributor(behavior_type=st_ob_type, model_name=chosen_model)
     
-    df_select = modelContributor(model_type_path)
-    dataset_name = df_select.loc['Dataset', 'Information']
+    
+    dataset_name = df_contributor.loc['Dataset', 'Information'] # get the dataset name
     
     st.header('Model Testing Results')
     st.markdown("#### Dataset Information")
     # get the dataset information
-    df_select = datasetInfo(int(dataset_name.split(' ')[-1]), st_ob_type)
-    st.dataframe(df_select)
+    df_dataset= datasetInfo(int(dataset_name.split(' ')[-1]), st_ob_type)
+    st.dataframe(df_dataset)
+    
+    # load the model information
+    st.markdown("#### Model Information")
+    st.table(df_model)
     
     
     # load test results
@@ -152,8 +158,7 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
     
     # get the model contributor information
     st.markdown("#### Model Information")
-    df_select = modelContributor(model_type_path)
-    st.table(df_select)
+    st.table(df_contributor)
 
     st.markdown("""---""")
 # select the model to be processed 
