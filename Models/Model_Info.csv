@@ -12,7 +12,7 @@ Indoor_Temp [C]
 Outdoor_Temp [C]
 Outdoor_Wind_Speed [m/s] 
 Outdoor_RH [%] ","0 - window close
-1 - window open",0.8,0.2,Pratik Pandey ,Syracuse University,ASHRAE OB Database Study 26,In Publishing
+1 - window open",80%,20%,Pratik Pandey ,Syracuse University,ASHRAE OB Database Study 26,In Publishing
 Window_Status,SVM_E3D,SVM,SVC model,"Indoor_Temp [C]
 Outdoor_Temp [C] 
 Outdoor_Air_Speed [m/s] 
