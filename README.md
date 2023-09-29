@@ -3,6 +3,7 @@ Install the required packages listed in the requirements.txt together with Pytho
 (For the current models download 'Study_26_Study26.csv' from the [shared Google Drive](https://drive.google.com/file/d/1pBptbqEkn5WkWeRh4gNowM7AB1QNfBbt/view?usp=sharing) and copy it into `/data/study_26/` with the already provided dictionary.)
 
 To run streamlit locally set the path to the folder containing ‘oblib_app.py’ and execute “streamlit run oblib_app.py”.
+Online deployment canbe access here (linked with staging branch): [https://yapanliu-oblib-streamlit-app-staging-4j4hur.streamlit.app/](https://yapanliu-oblib-streamlit-app-staging-4j4hur.streamlit.app/)
 
 ## Implementation of new models
 
