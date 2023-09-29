@@ -25,13 +25,26 @@ from utils import datasetInfo, modelContributor
 
 # add sidebar
 def sideBar():
-    #Add sidebar to the app
+    logo_path = './assets/images/IEA-EBC-Logo-removebg-preview.png'
+
+    # Add sidebar to the app
     st.sidebar.markdown("## OBLib - Occupant Behavior Library")
-    st.sidebar.markdown("Welcome to the OBLib App!")
-    st.sidebar.markdown("Dataset used in this app is from an opensource platform: https://ashraeobdatabase.com")
-    st.sidebar.markdown("Our GitHub Public Repository: https://github.com/yapanliu/OBlib")
-    st.sidebar.markdown("[Contact Us](mailto:yliu88@syr.edu)")
+
+    st.sidebar.markdown("---")  # Horizontal line
+    st.sidebar.markdown("### About")
+    st.sidebar.markdown("The 'OBLib-Occupant Behavior library' is a product of dedicated research and collaboration by the [BEST Lab](http://bestlab.syr.edu/) at Syracuse University, generously supported by IEA EBC Annex 79. To advance occupant behavior modeling, we have teamed up with international researchers to benchmark data-driven models on building occupant behaviors. Our preliminary efforts entailed an in-depth analysis of available datasets, pinpointing those apt for diverse modeling objectives. As an open-source offering, this library showcases a spectrum of machine learning models tailored to specific datasets from the [ASHRAE Global Occupant Behavior Database](https://ashraeobdatabase.com). Furthermore, we've benchmarked each model to compare its performance for building control applications.")
     
+    st.sidebar.markdown("<br>", unsafe_allow_html=True)  # Spacer
+    st.sidebar.markdown("[GitHub Repository](https://github.com/yapanliu/OBlib) | [Contact Us](mailto:yliu88@syr.edu)")
+    
+    st.sidebar.markdown("---")  # Horizontal line
+
+    # st.sidebar.markdown("---")  # Horizontal line
+
+
+    # Add a logo
+    st.sidebar.image(logo_path, width=200)
+
 
 # add select box for the behavior type
 def selectBehaviorType(models_path):
