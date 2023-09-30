@@ -124,10 +124,12 @@ def loadModelResults(model_type_path, st_ob_type, chosen_model):
     
     # '''evaluation metrics''' 
     with open(f'{results_dir}/evaluation.pickle', 'rb') as f:
-        eval = pickle.load(f)
+        # eval = pickle.load(f)
+        eval = pd.read_pickle(f)
         
     with open(f'{results_dir}/predictions.pickle', 'rb') as f:
-        predictions = pickle.load(f)
+        # predictions = pickle.load(f)
+        predictions = pd.read_pickle(f)
     
     # display results
     col1, col2 = st.columns([1, 1])
