@@ -1,5 +1,5 @@
-numpy
-pandas
-plotly==5.9
+numpy=1.19.5
+pandas=1.4.4
+plotly==5.9.0
 scikit-learn==1.1.1
 streamlit==1.10.0
